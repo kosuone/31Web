@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>점심의 언덕</title>
+<style>
+  :root{
+    --amber-deep:#c9713f;
+    --gold-warm:#f1a855;
+    --gold-pale:#fcdfa4;
+    --terracotta-far:#dd9a78;
+    --terracotta-mid:#b15e3e;
+    --umber-near:#4a2419;
+    --cream:#fff3de;
+    --ink:#3a1f16;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+    background:var(--umber-near);
+  }
+
+  .scene{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    font-family:'Noto Serif KR','Iowan Old Style','Palatino Linotype','Nanum Myeongjo',serif;
+  }
+
+  .sky{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,
+      var(--amber-deep) 0%,
+      var(--gold-warm) 42%,
+      var(--gold-pale) 78%,
+      #ffe9bd 100%);
+  }
+
+  .sun{
+    position:absolute;
+    left:50%;
+    top:34%;
+    width:min(26vw,220px);
+    height:min(26vw,220px);
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle at center,
+      #fff7e2 0%,
+      #ffe9b8 38%,
+      rgba(255,214,140,0.55) 62%,
+      rgba(255,214,140,0) 75%);
+    filter:blur(0.5px);
+  }
+
+  .haze{
+    position:absolute;
+    left:0; right:0;
+    bottom:30%;
+    height:22%;
+    background:linear-gradient(180deg, rgba(255,236,196,0) 0%, rgba(255,236,196,0.55) 100%);
+    pointer-events:none;
+  }
+
+  .cloud{
+    position:absolute;
+    border-radius:999px;
+    background:rgba(255,244,222,0.5);
+    filter:blur(6px);
+  }
+  .cloud-a{ width:16vw; height:2.6vw; top:20%; left:-20vw; animation:drift 90s linear infinite; }
+  .cloud-b{ width:10vw; height:1.8vw; top:28%; left:-14vw; animation:drift 130s linear infinite; animation-delay:-40s; opacity:0.7;}
+  .cloud-c{ width:13vw; height:2.1vw; top:16%; left:-18vw; animation:drift 110s linear infinite; animation-delay:-70s; opacity:0.6;}
+
+  @keyframes drift{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(140vw); }
+  }
+
+  .birds{
+    position:absolute;
+    top:22%;
+    left:0;
+    width:100%;
+    height:20%;
+    pointer-events:none;
+  }
+  .birds svg{
+    position:absolute;
+    animation:fly 46s linear infinite;
+  }
+  .birds svg.b2{ animation-duration:60s; animation-delay:-18s; top:40%; }
+  .birds svg.b3{ animation-duration:52s; animation-delay:-30s; top:70%; }
+  @keyframes fly{
+    from{ transform:translateX(-8vw); }
+    to{ transform:translateX(108vw); }
+  }
+
+  .hill{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    width:100%;
+  }
+  .hill-1{
+    height:46%;
+    background:var(--terracotta-far);
+    clip-path:polygon(0% 62%, 8% 55%, 18% 60%, 30% 48%, 42% 58%, 55% 46%, 68% 56%, 80% 44%, 92% 54%, 100% 46%, 100% 100%, 0% 100%);
+    opacity:0.9;
+  }
+  .hill-2{
+    height:36%;
+    background:var(--terracotta-mid);
+    clip-path:polygon(0% 70%, 10% 60%, 22% 68%, 36% 52%, 50% 66%, 64% 50%, 78% 64%, 90% 54%, 100% 62%, 100% 100%, 0% 100%);
+  }
+  .hill-3{
+    height:24%;
+    background:#7a3a28;
+    clip-path:polygon(0% 66%, 14% 78%, 26% 60%, 40% 74%, 56% 58%, 70% 76%, 84% 62%, 100% 72%, 100% 100%, 0% 100%);
+  }
+  .hill-4{
+    height:14%;
+    background:var(--umber-near);
+    clip-path:polygon(0% 60%, 12% 40%, 24% 58%, 38% 34%, 52% 56%, 66% 32%, 80% 54%, 92% 38%, 100% 50%, 100% 100%, 0% 100%);
+  }
+
+  .grass{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:6%;
+    background:var(--umber-near);
+  }
+  .blade{
+    position:absolute;
+    bottom:0;
+    width:2px;
+    background:var(--umber-near);
+    border-radius:2px 2px 0 0;
+    transform-origin:bottom center;
+    animation:sway 6s ease-in-out infinite;
+  }
+  @keyframes sway{
+    0%,100%{ transform:rotate(-3deg); }
+    50%{ transform:rotate(3deg); }
+  }
+
+  .particles{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+  }
+  .mote{
+    position:absolute;
+    bottom:-2%;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--cream);
+    box-shadow:0 0 6px 1px rgba(255,243,222,0.7);
+    opacity:0;
+    animation-name:rise;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    12%{ opacity:0.85; }
+    50%{ transform:translateY(-46vh) translateX(2vw); }
+    88%{ opacity:0.4; }
+    100%{ transform:translateY(-78vh) translateX(-1vw); opacity:0; }
+  }
+
+  .ui{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:clamp(20px,4vw,56px);
+    transition:opacity 0.6s ease;
+  }
+  .ui.hidden{ opacity:0; pointer-events:none; }
+
+  .caption{
+    color:var(--cream);
+    text-shadow:0 2px 14px rgba(30,10,4,0.45);
+    max-width:26ch;
+  }
+  .eyebrow{
+    margin:0 0 10px;
+    font-family:ui-monospace,'SFMono-Regular',Consolas,monospace;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    opacity:0.72;
+  }
+  .quote{
+    margin:0;
+    font-size:clamp(20px,2.6vw,30px);
+    font-weight:500;
+    line-height:1.5;
+    letter-spacing:0.01em;
+  }
+
+  .toggle{
+    position:absolute;
+    top:clamp(16px,3vw,28px);
+    right:clamp(16px,3vw,28px);
+    background:rgba(74,36,25,0.28);
+    color:var(--cream);
+    border:1px solid rgba(255,243,222,0.35);
+    border-radius:999px;
+    padding:8px 16px;
+    font-family:ui-monospace,'SFMono-Regular',Consolas,monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    backdrop-filter:blur(4px);
+  }
+  .toggle:hover{ background:rgba(74,36,25,0.42); }
+  .toggle:focus-visible{ outline:2px solid var(--cream); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .cloud, .birds svg, .blade, .mote{ animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+  <div class="sky"></div>
+  <div class="sun"></div>
+
+  <div class="cloud cloud-a"></div>
+  <div class="cloud cloud-b"></div>
+  <div class="cloud cloud-c"></div>
+
+  <div class="birds" aria-hidden="true">
+    <svg class="b1" width="28" height="10" viewBox="0 0 28 10"><path d="M0 6 Q7 0 14 6 Q21 0 28 6" fill="none" stroke="#4a2419" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/></svg>
+    <svg class="b2" width="20" height="8" viewBox="0 0 28 10"><path d="M0 6 Q7 0 14 6 Q21 0 28 6" fill="none" stroke="#4a2419" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/></svg>
+    <svg class="b3" width="16" height="6" viewBox="0 0 28 10"><path d="M0 6 Q7 0 14 6 Q21 0 28 6" fill="none" stroke="#4a2419" stroke-width="1.8" stroke-linecap="round" opacity="0.4"/></svg>
+  </div>
+
+  <div class="haze"></div>
+
+  <div class="hill hill-1"></div>
+  <div class="hill hill-2"></div>
+  <div class="hill hill-3"></div>
+  <div class="hill hill-4"></div>
+  <div class="grass" id="grass"></div>
+
+  <div class="particles" id="particles"></div>
+
+  <button class="toggle" id="toggleBtn" type="button">텍스트 숨기기</button>
+
+  <div class="ui" id="ui">
+    <div class="caption">
+      <p class="eyebrow">Lunch Break</p>
+      <p class="quote">점심의 틈, 잠시 이 풍경에 머무르세요.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // grass blades
+  var grass = document.getElementById('grass');
+  var bladeCount = 60;
+  for (var i = 0; i < bladeCount; i++) {
+    var b = document.createElement('div');
+    b.className = 'blade';
+    var h = 8 + Math.random() * 16;
+    b.style.left = (Math.random() * 100) + '%';
+    b.style.height = h + 'px';
+    b.style.animationDuration = (4 + Math.random() * 4) + 's';
+    b.style.animationDelay = (-Math.random() * 6) + 's';
+    grass.appendChild(b);
+  }
+
+  // floating light motes
+  var particles = document.getElementById('particles');
+  var moteCount = 22;
+  for (var j = 0; j < moteCount; j++) {
+    var m = document.createElement('div');
+    m.className = 'mote';
+    m.style.left = (Math.random() * 100) + '%';
+    var size = 3 + Math.random() * 4;
+    m.style.width = size + 'px';
+    m.style.height = size + 'px';
+    m.style.animationDuration = (14 + Math.random() * 12) + 's';
+    m.style.animationDelay = (-Math.random() * 20) + 's';
+    particles.appendChild(m);
+  }
+
+  // hide/show caption toggle
+  var btn = document.getElementById('toggleBtn');
+  var ui = document.getElementById('ui');
+  var hidden = false;
+  btn.addEventListener('click', function () {
+    hidden = !hidden;
+    ui.classList.toggle('hidden', hidden);
+    btn.textContent = hidden ? '텍스트 보이기' : '텍스트 숨기기';
+  });
+</script>
+
+</body>
+</html>
