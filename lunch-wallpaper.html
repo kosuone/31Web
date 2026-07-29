@@ -84,6 +84,31 @@
     to{ transform:translateX(140vw); }
   }
 
+  .plane-wrap{
+    position:absolute;
+    top:13%;
+    left:-12vw;
+    display:flex;
+    align-items:center;
+    animation:flyPlane 100s linear infinite;
+    animation-delay:-20s;
+    pointer-events:none;
+  }
+  .trail{
+    width:min(9vw,90px);
+    height:2px;
+    background:linear-gradient(to left, rgba(255,243,222,0.55), rgba(255,243,222,0));
+  }
+  .plane-icon{
+    width:34px;
+    height:auto;
+    opacity:0.78;
+  }
+  @keyframes flyPlane{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(122vw); }
+  }
+
   .birds{
     position:absolute;
     top:22%;
@@ -228,7 +253,8 @@
   .toggle:focus-visible{ outline:2px solid var(--cream); outline-offset:2px; }
 
   @media (prefers-reduced-motion: reduce){
-    .cloud, .birds svg, .blade, .mote{ animation:none !important; }
+    .cloud, .birds svg, .blade, .mote, .plane-wrap{ animation:none !important; }
+    .plane-wrap{ left:22%; }
   }
 </style>
 </head>
@@ -241,6 +267,13 @@
   <div class="cloud cloud-a"></div>
   <div class="cloud cloud-b"></div>
   <div class="cloud cloud-c"></div>
+
+  <div class="plane-wrap" aria-hidden="true">
+    <div class="trail"></div>
+    <svg class="plane-icon" viewBox="0 0 64 24" fill="#4a2419">
+      <path d="M2 14 L26 12 L40 2 L45 2 L37 12 L54 12 L60 8 L64 8 L61 14 L64 20 L60 20 L54 16 L37 16 L45 22 L40 22 L26 16 L2 16 Z"/>
+    </svg>
+  </div>
 
   <div class="birds" aria-hidden="true">
     <svg class="b1" width="28" height="10" viewBox="0 0 28 10"><path d="M0 6 Q7 0 14 6 Q21 0 28 6" fill="none" stroke="#4a2419" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/></svg>
