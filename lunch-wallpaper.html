@@ -155,6 +155,40 @@
     clip-path:polygon(0% 60%, 12% 40%, 24% 58%, 38% 34%, 52% 56%, 66% 32%, 80% 54%, 92% 38%, 100% 50%, 100% 100%, 0% 100%);
   }
 
+  .flagpole{
+    position:absolute;
+    left:65%;
+    bottom:12%;
+    width:2px;
+    height:min(14vh,110px);
+    background:var(--umber-near);
+    transform-origin:bottom center;
+  }
+  .flagpole::before{
+    content:"";
+    position:absolute;
+    left:-2px;
+    bottom:-4px;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--umber-near);
+  }
+  .flag{
+    position:absolute;
+    top:0;
+    left:1px;
+    width:38px;
+    height:25.3px;
+    transform-origin:left center;
+    animation:wave 3.6s ease-in-out infinite;
+    filter:drop-shadow(0 1px 3px rgba(20,8,4,0.35));
+  }
+  @keyframes wave{
+    0%,100%{ transform:skewY(0deg) scaleX(1); }
+    50%{ transform:skewY(-5deg) scaleX(0.96); }
+  }
+
   .grass{
     position:absolute;
     left:0; right:0; bottom:0;
@@ -253,7 +287,7 @@
   .toggle:focus-visible{ outline:2px solid var(--cream); outline-offset:2px; }
 
   @media (prefers-reduced-motion: reduce){
-    .cloud, .birds svg, .blade, .mote, .plane-wrap{ animation:none !important; }
+    .cloud, .birds svg, .blade, .mote, .plane-wrap, .flag{ animation:none !important; }
     .plane-wrap{ left:22%; }
   }
 </style>
@@ -287,6 +321,37 @@
   <div class="hill hill-2"></div>
   <div class="hill hill-3"></div>
   <div class="hill hill-4"></div>
+
+  <div class="flagpole" aria-hidden="true">
+    <svg class="flag" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="200" fill="#fff"/>
+      <g transform="translate(150,100)">
+        <path d="M0,-55 A55,55 0 0 1 0,55 A27.5,27.5 0 0 1 0,0 A27.5,27.5 0 0 0 0,-55 Z" fill="#cd2e3e"/>
+        <path d="M0,55 A55,55 0 0 1 0,-55 A27.5,27.5 0 0 1 0,0 A27.5,27.5 0 0 0 0,55 Z" fill="#002f6c"/>
+      </g>
+      <g fill="#000">
+        <rect x="20" y="20" width="40" height="8"/>
+        <rect x="20" y="34" width="40" height="8"/>
+        <rect x="20" y="48" width="40" height="8"/>
+      </g>
+      <g fill="#000">
+        <rect x="240" y="20" width="17" height="8"/><rect x="263" y="20" width="17" height="8"/>
+        <rect x="240" y="34" width="40" height="8"/>
+        <rect x="240" y="48" width="17" height="8"/><rect x="263" y="48" width="17" height="8"/>
+      </g>
+      <g fill="#000">
+        <rect x="20" y="144" width="40" height="8"/>
+        <rect x="20" y="158" width="17" height="8"/><rect x="43" y="158" width="17" height="8"/>
+        <rect x="20" y="172" width="40" height="8"/>
+      </g>
+      <g fill="#000">
+        <rect x="240" y="144" width="17" height="8"/><rect x="263" y="144" width="17" height="8"/>
+        <rect x="240" y="158" width="17" height="8"/><rect x="263" y="158" width="17" height="8"/>
+        <rect x="240" y="172" width="17" height="8"/><rect x="263" y="172" width="17" height="8"/>
+      </g>
+    </svg>
+  </div>
+
   <div class="grass" id="grass"></div>
 
   <div class="particles" id="particles"></div>
